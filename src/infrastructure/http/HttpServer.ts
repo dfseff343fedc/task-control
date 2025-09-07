@@ -5,14 +5,20 @@ import {
   type ExtendedRequest 
 } from './middlewares/index.js';
 import { Route, RouteDefinition } from '../../shared/types/index.js';
+import { JsonDatabase } from '../database/index.js';
 
 export class HttpServer {
   private routes: Route[] = [];
   private server?: Server;
   private readonly port: number;
+  private readonly database: JsonDatabase;
 
-  constructor(port: number = 3333) {
+  constructor(port: number = 3333, databasePath?: string) {
     this.port = port;
+    this.database = new JsonDatabase({ 
+      filename: 'db.json',
+      directory: databasePath || process.cwd()
+    });
   }
 
   /**
@@ -64,6 +70,9 @@ export class HttpServer {
    */
   private async handleRequest(req: ExtendedRequest, res: ServerResponse): Promise<void> {
     try {
+      // Injetar instância do database no contexto da requisição
+      (req as any).database = this.database;
+      
       // Aplicar middleware JSON
       await jsonMiddleware(req, res, async () => {
         const { method = 'GET', url = '/' } = req;
@@ -93,28 +102,40 @@ export class HttpServer {
    * Inicia o servidor HTTP
    */
   public async start(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      try {
-        this.server = createServer((req, res) => {
-          this.handleRequest(req as ExtendedRequest, res).catch(error => {
-            console.error('Unhandled request error:', error);
+    try {
+      // Inicializar banco de dados primeiro
+      await this.database.initialize();
+      
+      return new Promise((resolve, reject) => {
+        try {
+          this.server = createServer((req, res) => {
+            this.handleRequest(req as ExtendedRequest, res).catch(error => {
+              console.error('Unhandled request error:', error);
+            });
           });
-        });
 
-        this.server.listen(this.port, () => {
-          console.log(`🚀 Server running at http://localhost:${this.port}`);
-          console.log(`📋 Routes registered: ${this.routes.length}`);
-          resolve();
-        });
+          this.server.listen(this.port, () => {
+            console.log(`🚀 Server running at http://localhost:${this.port}`);
+            console.log(`📋 Routes registered: ${this.routes.length}`);
+            
+            // Log info do banco
+            const dbInfo = this.database.getInfo();
+            console.log(`🗄️  Database: ${dbInfo.tables.length} tables, ${dbInfo.totalRecords} records`);
+            
+            resolve();
+          });
 
-        this.server.on('error', (error) => {
-          console.error('❌ Server error:', error);
+          this.server.on('error', (error) => {
+            console.error('❌ Server error:', error);
+            reject(error);
+          });
+        } catch (error) {
           reject(error);
-        });
-      } catch (error) {
-        reject(error);
-      }
-    });
+        }
+      });
+    } catch (error) {
+      throw new Error(`Failed to initialize database: ${error}`);
+    }
   }
 
   /**
@@ -139,13 +160,21 @@ export class HttpServer {
   }
 
   /**
+   * Retorna instância do banco de dados
+   */
+  public getDatabase(): JsonDatabase {
+    return this.database;
+  }
+
+  /**
    * Retorna informações do servidor
    */
   public getInfo() {
     return {
       port: this.port,
       routesCount: this.routes.length,
-      running: !!this.server?.listening
+      running: !!this.server?.listening,
+      database: this.database.getInfo()
     };
   }
 }

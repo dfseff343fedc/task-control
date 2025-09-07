@@ -33,11 +33,16 @@ async function bootstrap() {
     console.log('✅ Task Control API is ready!');
     console.log('');
     console.log('📋 Available endpoints:');
-    console.log('   GET  /           - Hello World');
-    console.log('   GET  /health     - Health check');
-    console.log('   POST /test-json  - Test JSON middleware');
-    console.log('   GET  /test-error - Test error handling');
-    console.log('   GET  /test-request - Test request info');
+    console.log('   GET  /              - Hello World');
+    console.log('   GET  /health        - Health check');
+    console.log('   POST /test-json     - Test JSON middleware');
+    console.log('   GET  /test-error    - Test error handling');
+    console.log('   GET  /test-request  - Test request info');
+    console.log('');
+    console.log('🗄️  Database endpoints:');
+    console.log('   GET    /database/info - Database information');
+    console.log('   POST   /database/test - Test CRUD operations');
+    console.log('   DELETE /database/test - Clean test data');
 
   } catch (error) {
     console.error('❌ Failed to start server:', error);
