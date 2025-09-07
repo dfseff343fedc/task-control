@@ -1,0 +1,23 @@
+{
+  "name": "task-control",
+  "version": "1.0.0",
+  "description": "Sistema de controle de tarefas com TypeScript e arquitetura baseada em domínios",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "start": "node dist/server.js",
+    "dev": "node --watch --loader ts-node/esm src/server.ts",
+    "clean": "rimraf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": ["nodejs", "typescript", "ddd", "clean-architecture", "tasks"],
+  "author": "Rocketseat Student",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
