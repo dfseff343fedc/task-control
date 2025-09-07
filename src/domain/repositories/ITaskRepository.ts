@@ -1,19 +1,13 @@
-import { Task, TaskSnapshot } from '../entities/index.js';
-import { TaskId, TaskStatus, TaskPriority } from '../value-objects/index.js';
+import { Task } from '../entities/index.js';
 
 /**
  * Critérios de busca para tarefas
  */
 export interface TaskSearchCriteria {
-  status?: string | string[];
-  priority?: string | string[];
+  completed?: boolean;
   search?: string; // Busca por título ou descrição
-  dueDateBefore?: Date;
-  dueDateAfter?: Date;
   createdAfter?: Date;
   createdBefore?: Date;
-  isOverdue?: boolean;
-  isDueSoon?: boolean; // Próximos 7 dias
 }
 
 /**
@@ -63,17 +57,17 @@ export interface ITaskRepository {
   /**
    * Busca tarefa por ID
    */
-  findById(id: TaskId): Promise<Task | null>;
+  findById(id: string): Promise<Task | null>;
 
   /**
    * Busca tarefa por ID (lança exceção se não encontrar)
    */
-  getById(id: TaskId): Promise<Task>;
+  getById(id: string): Promise<Task>;
 
   /**
    * Remove uma tarefa
    */
-  delete(id: TaskId): Promise<boolean>;
+  delete(id: string): Promise<boolean>;
 
   /**
    * Busca todas as tarefas
@@ -95,24 +89,14 @@ export interface ITaskRepository {
   ): Promise<TaskPaginatedResult>;
 
   /**
-   * Busca tarefas por status
+   * Busca tarefas completadas
    */
-  findByStatus(status: TaskStatus): Promise<Task[]>;
+  findCompleted(): Promise<Task[]>;
 
   /**
-   * Busca tarefas por prioridade
+   * Busca tarefas não completadas
    */
-  findByPriority(priority: TaskPriority): Promise<Task[]>;
-
-  /**
-   * Busca tarefas vencidas
-   */
-  findOverdueTasks(): Promise<Task[]>;
-
-  /**
-   * Busca tarefas que vencem em breve
-   */
-  findDueSoonTasks(days?: number): Promise<Task[]>;
+  findIncomplete(): Promise<Task[]>;
 
   /**
    * Busca tarefas por termo de busca
@@ -125,24 +109,12 @@ export interface ITaskRepository {
   count(): Promise<number>;
 
   /**
-   * Conta tarefas por status
-   */
-  countByStatus(status: TaskStatus): Promise<number>;
-
-  /**
    * Verifica se existe tarefa com ID
    */
-  exists(id: TaskId): Promise<boolean>;
+  exists(id: string): Promise<boolean>;
 
   /**
    * Remove todas as tarefas (cuidado!)
    */
   clear(): Promise<void>;
-
-  /**
-   * Operações em lote
-   */
-  saveBatch(tasks: Task[]): Promise<void>;
-  updateBatch(tasks: Task[]): Promise<void>;
-  deleteBatch(ids: TaskId[]): Promise<number>; // Retorna quantidade removida
 }

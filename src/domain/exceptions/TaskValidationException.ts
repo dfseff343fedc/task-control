@@ -4,7 +4,7 @@ import { DomainException } from './DomainException.js';
  * Exceção lançada quando há falha na validação de dados da tarefa
  */
 export class TaskValidationException extends DomainException {
-  public readonly field?: string;
+  public readonly field?: string | undefined;
   public readonly validationErrors: string[];
 
   constructor(message: string, field?: string, errors: string[] = []) {
@@ -88,7 +88,7 @@ export class TaskValidationException extends DomainException {
   /**
    * Retorna representação JSON com erros detalhados
    */
-  public toJSON() {
+  public override toJSON() {
     return {
       ...super.toJSON(),
       field: this.field,

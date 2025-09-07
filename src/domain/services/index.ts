@@ -1,1 +1,1 @@
-export { TaskDomainService, type TaskStatistics, type ProductivityAnalysis } from './TaskDomainService.js';
+export { TaskDomainService, type TaskStatistics } from './TaskDomainService.js';

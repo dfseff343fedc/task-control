@@ -49,7 +49,7 @@ export class TaskBusinessRuleException extends DomainException {
   /**
    * Retorna representação JSON com regra violada
    */
-  public toJSON() {
+  public override toJSON() {
     return {
       ...super.toJSON(),
       rule: this.rule

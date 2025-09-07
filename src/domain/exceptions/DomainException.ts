@@ -2,7 +2,7 @@
  * Exceção base para erros de domínio
  */
 export abstract class DomainException extends Error {
-  public readonly name: string;
+  public override readonly name: string;
   public readonly code: string;
 
   constructor(message: string, code: string) {
