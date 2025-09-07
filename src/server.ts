@@ -1,9 +1,15 @@
-import { createServer, IncomingMessage, ServerResponse } from 'node:http';
+import { createServer, ServerResponse } from 'node:http';
+import { 
+  jsonMiddleware, 
+  errorMiddleware, 
+  asyncErrorHandler, 
+  type ExtendedRequest 
+} from './infrastructure/http/middlewares/index.js';
 
 interface Route {
   method: string;
   path: RegExp;
-  handler: (req: IncomingMessage, res: ServerResponse, params?: any) => Promise<void> | void;
+  handler: (req: ExtendedRequest, res: ServerResponse, params?: any) => Promise<void> | void;
 }
 
 class HttpServer {
@@ -43,22 +49,30 @@ class HttpServer {
   }
 
   public async start(): Promise<void> {
-    const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
+    const server = createServer(async (req: ExtendedRequest, res: ServerResponse) => {
       try {
-        const { method = 'GET', url = '/' } = req;
-        const routeMatch = this.findRoute(method, url);
+        // Aplicar middleware JSON
+        await jsonMiddleware(req, res, async () => {
+          const { method = 'GET', url = '/' } = req;
+          const routeMatch = this.findRoute(method, url);
 
-        if (!routeMatch) {
-          res.writeHead(404, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Route not found' }));
-          return;
-        }
+          if (!routeMatch) {
+            res.writeHead(404);
+            res.end(JSON.stringify({ 
+              error: 'Route not found',
+              message: `Route ${method} ${url} not found`,
+              statusCode: 404,
+              timestamp: new Date().toISOString()
+            }));
+            return;
+          }
 
-        await routeMatch.route.handler(req, res, routeMatch.params);
+          // Executar handler com tratamento de erro
+          await routeMatch.route.handler(req, res, routeMatch.params);
+        });
       } catch (error) {
-        console.error('Server Error:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Internal server error' }));
+        // Aplicar middleware de tratamento de erro
+        errorMiddleware(error as any, req, res);
       }
     });
 
@@ -72,26 +86,50 @@ class HttpServer {
 const app = new HttpServer(3333);
 
 // Rota Hello World
-app.addRoute('GET', '/', (_req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+app.addRoute('GET', '/', asyncErrorHandler(async (_req, res) => {
+  res.writeHead(200);
   res.end(JSON.stringify({ 
     message: 'Hello World! 👋',
     project: 'Task Control API',
     version: '1.0.0',
-    architecture: 'Domain-Driven Design',
+    architecture: 'Domain-Driven Design with Middlewares',
+    features: [
+      'TypeScript strict mode',
+      'Clean Architecture',
+      'Custom JSON middleware',
+      'Error handling middleware',
+      'CORS support'
+    ],
     timestamp: new Date().toISOString()
   }));
-});
+}));
 
 // Rota de health check
-app.addRoute('GET', '/health', (_req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+app.addRoute('GET', '/health', asyncErrorHandler(async (_req, res) => {
+  res.writeHead(200);
   res.end(JSON.stringify({ 
     status: 'OK',
     uptime: process.uptime(),
+    memory: process.memoryUsage(),
     timestamp: new Date().toISOString()
   }));
-});
+}));
+
+// Rota para testar processamento de JSON (POST)
+app.addRoute('POST', '/test-json', asyncErrorHandler(async (req, res) => {
+  res.writeHead(200);
+  res.end(JSON.stringify({ 
+    message: 'JSON middleware working!',
+    receivedBody: req.body,
+    bodyType: typeof req.body,
+    timestamp: new Date().toISOString()
+  }));
+}));
+
+// Rota para testar erro (desenvolvimento)
+app.addRoute('GET', '/test-error', asyncErrorHandler(async (_req, _res) => {
+  throw new Error('This is a test error to validate error middleware');
+}));
 
 // Iniciar servidor
 app.start().catch(console.error);
