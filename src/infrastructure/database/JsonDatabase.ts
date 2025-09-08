@@ -32,17 +32,12 @@ export class JsonDatabase {
     this.databasePath = path.join(this.options.directory, this.options.filename);
   }
 
-  /**
-   * Inicializa o banco de dados
-   * - Cria arquivo se não existir
-   * - Carrega dados existentes
-   */
+
   public async initialize(): Promise<void> {
     try {
       console.log('🗄️  Initializing JSON Database...');
       console.log(`   Path: ${this.databasePath}`);
 
-      // Verificar se arquivo existe
       const fileExists = await this.fileExists();
       
       if (fileExists) {
@@ -58,16 +53,12 @@ export class JsonDatabase {
       
     } catch (error) {
       console.error('❌ Failed to initialize database:', error);
-      // Em caso de erro, inicializar com database vazio
       this.database = {};
       this.isInitialized = true;
       await this.persist();
     }
   }
 
-  /**
-   * Verifica se arquivo do banco existe
-   */
   private async fileExists(): Promise<boolean> {
     try {
       await fs.access(this.databasePath);
@@ -77,9 +68,7 @@ export class JsonDatabase {
     }
   }
 
-  /**
-   * Carrega dados do arquivo
-   */
+ 
   private async loadFromFile(): Promise<void> {
     try {
       const data = await fs.readFile(this.databasePath, 'utf8');
@@ -95,17 +84,13 @@ export class JsonDatabase {
     }
   }
 
-  /**
-   * Cria arquivo vazio do banco
-   */
+
   private async createEmptyDatabase(): Promise<void> {
     this.database = {};
     await this.persist();
   }
 
-  /**
-   * Persiste dados na memória para arquivo
-   */
+ 
   private async persist(): Promise<void> {
     try {
       const data = JSON.stringify(this.database, null, 2);
@@ -116,9 +101,7 @@ export class JsonDatabase {
     }
   }
 
-  /**
-   * Seleciona dados de uma tabela
-   */
+ 
   public select<T = any>(table: string, search?: Partial<T>): T[] {
     this.ensureInitialized();
     
@@ -131,12 +114,12 @@ export class JsonDatabase {
           
           const rowValue = row[key];
           
-          // Se o valor da busca é string, fazer busca parcial
+         
           if (typeof value === 'string' && typeof rowValue === 'string') {
             return rowValue.toLowerCase().includes(value.toLowerCase());
           }
           
-          // Comparação exata para outros tipos
+         
           return rowValue === value;
         });
       });
@@ -145,9 +128,7 @@ export class JsonDatabase {
     return data as T[];
   }
 
-  /**
-   * Insere novo registro na tabela
-   */
+ 
   public async insert<T = any>(table: string, data: T): Promise<T> {
     this.ensureInitialized();
 
@@ -161,9 +142,7 @@ export class JsonDatabase {
     return data;
   }
 
-  /**
-   * Atualiza registro na tabela
-   */
+
   public async update<T = any>(table: string, id: string, data: Partial<T>): Promise<boolean> {
     this.ensureInitialized();
 
@@ -181,16 +160,14 @@ export class JsonDatabase {
     this.database[table][rowIndex] = { 
       ...currentRow, 
       ...data,
-      id // Garantir que ID não seja sobrescrito
+      id 
     };
 
     await this.persist();
     return true;
   }
 
-  /**
-   * Remove registro da tabela
-   */
+ 
   public async delete(table: string, id: string): Promise<boolean> {
     this.ensureInitialized();
 
@@ -209,27 +186,21 @@ export class JsonDatabase {
     return true;
   }
 
-  /**
-   * Limpa todos os dados de uma tabela
-   */
+ 
   public async clear(table: string): Promise<void> {
     this.ensureInitialized();
     this.database[table] = [];
     await this.persist();
   }
 
-  /**
-   * Remove uma tabela completamente
-   */
+ 
   public async dropTable(table: string): Promise<void> {
     this.ensureInitialized();
     delete this.database[table];
     await this.persist();
   }
 
-  /**
-   * Retorna informações do banco
-   */
+ 
   public getInfo() {
     return {
       path: this.databasePath,
@@ -239,25 +210,18 @@ export class JsonDatabase {
     };
   }
 
-  /**
-   * Conta número de tabelas
-   */
-  private getTablesCount(): number {
+    private getTablesCount(): number {
     return Object.keys(this.database).length;
   }
 
-  /**
-   * Garante que o banco foi inicializado
-   */
+ 
   private ensureInitialized(): void {
     if (!this.isInitialized) {
       throw new Error('Database not initialized. Call initialize() first.');
     }
   }
 
-  /**
-   * Força sincronização manual (útil para testes)
-   */
+ 
   public async forceSync(): Promise<void> {
     await this.persist();
   }

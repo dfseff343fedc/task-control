@@ -2,12 +2,8 @@ import { ServerResponse } from 'node:http';
 import { ExtendedRequest } from '../../infrastructure/http/index.js';
 
 export class DatabaseController {
-  /**
-   * Retorna informações do banco de dados
-   * GET /database/info
-   */
+  
   public async getDatabaseInfo(req: ExtendedRequest, res: ServerResponse): Promise<void> {
-    // Acessar database através do contexto da requisição
     const database = (req as any).database;
     
     if (!database) {
@@ -33,7 +29,7 @@ export class DatabaseController {
           const records = database.select(tableName);
           detail[tableName] = {
             count: records.length,
-            sample: records.slice(0, 2) // Mostrar apenas 2 registros como exemplo
+            sample: records.slice(0, 2) 
           };
           return detail;
         }, {})
@@ -42,10 +38,7 @@ export class DatabaseController {
     }, null, 2));
   }
 
-  /**
-   * Testa operações CRUD no banco
-   * POST /database/test
-   */
+ 
   public async testDatabaseOperations(req: ExtendedRequest, res: ServerResponse): Promise<void> {
     const database = (req as any).database;
     
@@ -68,14 +61,13 @@ export class DatabaseController {
         }
       };
 
-      // Teste de INSERT
       await database.insert(testTable, testRecord);
       
-      // Teste de SELECT
+     
       const allRecords = database.select(testTable);
       const specificRecord = database.select(testTable, { id: testRecord.id });
       
-      // Teste de UPDATE
+     
       await database.update(testTable, testRecord.id, {
         description: 'Updated test record',
         updated_at: new Date().toISOString()
@@ -106,10 +98,7 @@ export class DatabaseController {
     }
   }
 
-  /**
-   * Limpa dados de teste
-   * DELETE /database/test
-   */
+  
   public async cleanTestData(req: ExtendedRequest, res: ServerResponse): Promise<void> {
     const database = (req as any).database;
     

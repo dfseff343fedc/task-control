@@ -1,6 +1,4 @@
-/**
- * Exceção base para erros de domínio
- */
+
 export abstract class DomainException extends Error {
   public override readonly name: string;
   public readonly code: string;
@@ -10,15 +8,11 @@ export abstract class DomainException extends Error {
     this.name = this.constructor.name;
     this.code = code;
     
-    // Mantém stack trace correto
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
     }
   }
 
-  /**
-   * Retorna representação JSON da exceção
-   */
   public toJSON() {
     return {
       name: this.name,

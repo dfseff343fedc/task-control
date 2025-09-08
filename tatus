@@ -1,0 +1,3 @@
+[33m57443d1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m feat: implementar CRUD completo de tasks com Factory Pattern
+[33m352e150[m feat: implementar fluxo completo de criar task seguindo DDD
+[33me328eb8[m feat: implementar camada de domínio DDD completa

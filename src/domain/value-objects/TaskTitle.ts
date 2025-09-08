@@ -42,14 +42,12 @@ export class TaskTitle {
       throw new Error(`Title must have at most ${TaskTitle.MAX_LENGTH} characters`);
     }
 
-    // Não permitir apenas espaços em branco
     if (this.value.replace(/\s/g, '').length === 0) {
       throw new Error('Title cannot contain only whitespace');
     }
 
-    // Validações adicionais de negócio
     const forbiddenPatterns = [
-      /^TODO:?\s*/i, // Evitar prefixos redundantes
+      /^TODO:?\s*/i, 
       /^TASK:?\s*/i
     ];
 
@@ -60,16 +58,12 @@ export class TaskTitle {
     }
   }
 
-  /**
-   * Retorna o valor do título
-   */
+ 
   public getValue(): string {
     return this.value;
   }
 
-  /**
-   * Retorna versão resumida do título
-   */
+ 
   public getShort(maxLength: number = 50): string {
     if (this.value.length <= maxLength) {
       return this.value;
@@ -78,30 +72,22 @@ export class TaskTitle {
     return this.value.substring(0, maxLength - 3) + '...';
   }
 
-  /**
-   * Verifica se contém termo de busca
-   */
+ 
   public contains(searchTerm: string): boolean {
     return this.value.toLowerCase().includes(searchTerm.toLowerCase());
   }
 
-  /**
-   * Compara dois títulos
-   */
+ 
   public equals(other: TaskTitle): boolean {
     return this.value === other.value;
   }
 
-  /**
-   * Representação string
-   */
+ 
   public toString(): string {
     return this.value;
   }
 
-  /**
-   * Cria TaskTitle a partir de string
-   */
+ 
   public static create(value: string): TaskTitle {
     return new TaskTitle(value);
   }

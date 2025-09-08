@@ -24,12 +24,9 @@ export class TestController {
     res.end(JSON.stringify(response, null, 2));
   }
 
-  /**
-   * Testa tratamento de erros pelo middleware
-   * GET /test-error
-   */
+ 
   public async testError(_req: ExtendedRequest, _res: ServerResponse): Promise<void> {
-    // Simular diferentes tipos de erro
+   
     const errorTypes = [
       () => { throw new Error('Generic test error for middleware validation') },
       () => { 
@@ -46,7 +43,7 @@ export class TestController {
       }
     ];
 
-    // Escolher erro aleatório para testar
+   
     const randomIndex = Math.floor(Math.random() * errorTypes.length);
     const randomError = errorTypes[randomIndex];
     
@@ -57,10 +54,7 @@ export class TestController {
     }
   }
 
-  /**
-   * Testa informações de requisição
-   * GET /test-request
-   */
+  
   public async testRequest(req: ExtendedRequest, res: ServerResponse): Promise<void> {
     const requestInfo = {
       message: '📋 Request information',

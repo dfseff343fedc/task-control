@@ -1,13 +1,10 @@
 import { ITaskRepository } from '../../domain/index.js';
 import { CreateTaskUseCase, ListTasksUseCase, ToggleCompletedUseCase, UpdateTaskUseCase, DeleteTaskUseCase   } from '../../application/index.js';
 
-/**
- * Factory para criar use cases sob demanda
- */
+
 export class UseCaseFactory {
   private static taskRepository: ITaskRepository;
   
-  // Cache dos use cases
   private static createTaskUseCase?: CreateTaskUseCase;
   private static listTasksUseCase?: ListTasksUseCase;
   private static toggleCompletedUseCase?: ToggleCompletedUseCase;

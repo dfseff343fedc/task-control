@@ -25,7 +25,7 @@ export class ListTasksUseCase {
 
     const tasks = await this.taskRepository.findWithPagination(
       cleanCriteria,
-      undefined, // sort
+      undefined, 
       cleanPagination
     );
 

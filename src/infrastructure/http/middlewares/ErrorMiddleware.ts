@@ -14,14 +14,8 @@ export interface ErrorResponse {
   path?: string | undefined;
 }
 
-/**
- * Middleware para tratamento de erros
- * - Captura erros não tratados na aplicação
- * - Formata respostas de erro de forma padronizada
- * - Define códigos HTTP apropriados
- */
+
 export const errorMiddleware = (error: ErrorWithStatus, req: ExtendedRequest, res: ServerResponse): void => {
-  // Log do erro para debugging
   console.error('❌ Error caught by middleware:', {
     message: error.message,
     stack: error.stack,
@@ -30,11 +24,9 @@ export const errorMiddleware = (error: ErrorWithStatus, req: ExtendedRequest, re
     timestamp: new Date().toISOString()
   });
 
-  // Determinar código de status HTTP
   let statusCode = error.statusCode || 500;
   let errorType = 'Internal Server Error';
 
-  // Mapear diferentes tipos de erro
   switch (error.name) {
     case 'ValidationError':
       statusCode = 400;
@@ -58,7 +50,6 @@ export const errorMiddleware = (error: ErrorWithStatus, req: ExtendedRequest, re
       break;
   }
 
-  // Preparar resposta de erro padronizada
   const errorResponse: ErrorResponse = {
     error: errorType,
     message: error.message || 'An unexpected error occurred',
@@ -67,12 +58,10 @@ export const errorMiddleware = (error: ErrorWithStatus, req: ExtendedRequest, re
     path: req.url
   };
 
-  // Em desenvolvimento, incluir stack trace
   if (process.env['NODE_ENV'] === 'development') {
     (errorResponse as any).stack = error.stack;
   }
 
-  // Enviar resposta de erro
   try {
     if (!res.headersSent) {
       res.writeHead(statusCode, { 'Content-Type': 'application/json' });
@@ -80,7 +69,6 @@ export const errorMiddleware = (error: ErrorWithStatus, req: ExtendedRequest, re
     
     res.end(JSON.stringify(errorResponse, null, 2));
   } catch (responseError) {
-    // Fallback em caso de erro ao enviar resposta
     console.error('❌ Failed to send error response:', responseError);
     
     if (!res.headersSent) {
@@ -96,9 +84,7 @@ export const errorMiddleware = (error: ErrorWithStatus, req: ExtendedRequest, re
   }
 };
 
-/**
- * Wrapper para capturar erros assíncronos em handlers
- */
+
 export const asyncErrorHandler = (
   handler: (req: ExtendedRequest, res: ServerResponse, params?: any) => Promise<void>
 ) => {

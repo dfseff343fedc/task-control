@@ -2,23 +2,13 @@ import { Task } from '../../domain/entities/index.js';
 import { ITaskRepository } from '../../domain/repositories/index.js';
 import { CreateTaskRequest, CreateTaskResponse } from '../dtos/index.js';
 
-/**
- * Use Case para criar uma nova tarefa
- * 
- * Responsabilidades:
- * - Validar dados de entrada
- * - Criar entidade Task
- * - Persistir via repository
- * - Retornar resposta formatada
- */
+
 export class CreateTaskUseCase {
   constructor(private readonly taskRepository: ITaskRepository) {}
 
   public async execute(request: CreateTaskRequest): Promise<CreateTaskResponse> {
-    // Validar entrada
     this.validateRequest(request);
 
-    // Verificar se já existe tarefa com o mesmo título (opcional)
     const existingTasks = await this.taskRepository.searchByTerm(request.title.trim());
     const duplicateTask = existingTasks.find(task => 
       task.title.toLowerCase() === request.title.trim().toLowerCase()
@@ -28,22 +18,17 @@ export class CreateTaskUseCase {
       throw new Error(`Task with title "${request.title}" already exists`);
     }
 
-    // Criar nova tarefa
     const task = Task.create({
       title: request.title.trim(),
       description: request.description.trim()
     });
 
-    // Persistir tarefa
     await this.taskRepository.save(task);
 
-    // Retornar resposta
     return this.mapToResponse(task);
   }
 
-  /**
-   * Valida os dados da requisição
-   */
+
   private validateRequest(request: CreateTaskRequest): void {
     if (!request.title || request.title.trim().length === 0) {
       throw new Error('Title is required');
@@ -66,9 +51,7 @@ export class CreateTaskUseCase {
     }
   }
 
-  /**
-   * Mapeia entidade para response DTO
-   */
+ 
   private mapToResponse(task: Task): CreateTaskResponse {
     return {
       id: task.id,
