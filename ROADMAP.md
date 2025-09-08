@@ -3,6 +3,7 @@
 ## 📋 Status do Projeto
 
 ### ✅ Fase 1: Setup Inicial (CONCLUÍDO)
+
 - [x] Instalação e configuração do TypeScript
 - [x] Configuração de scripts de desenvolvimento
 - [x] Setup do controle de versão (Git)
@@ -12,6 +13,7 @@
 ### 🔄 Próximas Fases
 
 ## 📋 Fase 2: Fundação da Arquitetura
+
 - [ ] Implementar sistema de injeção de dependências
 - [ ] Criar interfaces base para repositórios
 - [ ] Implementar sistema de middleware personalizado
@@ -19,6 +21,7 @@
 - [ ] Setup de variáveis de ambiente
 
 ## 📋 Fase 3: Domínio de Tarefas
+
 - [ ] Definir entidade Task no domínio
 - [ ] Criar value objects (TaskId, TaskTitle, TaskDescription)
 - [ ] Implementar casos de uso (UseCase pattern)
@@ -26,30 +29,35 @@
 - [ ] Implementar regras de negócio
 
 ## 📋 Fase 4: Camada de Infraestrutura
+
 - [ ] Implementar repositório em memória
 - [ ] Implementar repositório com arquivo JSON
 - [ ] Sistema de persistência de dados
 - [ ] Implementar sistema de migração de dados
 
 ## 📋 Fase 5: Camada de Aplicação
+
 - [ ] Implementar serviços de aplicação
 - [ ] Sistema de validação de dados
 - [ ] Implementar DTOs (Data Transfer Objects)
 - [ ] Sistema de tratamento de erros
 
 ## 📋 Fase 6: API REST Completa
+
 - [ ] CRUD completo de tarefas
 - [ ] Sistema de filtros e busca
 - [ ] Paginação de resultados
 - [ ] Validação de entrada de dados
 
 ## 📋 Fase 7: Features Avançadas
+
 - [ ] Sistema de importação via CSV
 - [ ] Sistema de categorização de tarefas
 - [ ] Sistema de prioridades
 - [ ] Relatórios e estatísticas
 
 ## 📋 Fase 8: Qualidade & Performance
+
 - [ ] Implementar testes unitários
 - [ ] Implementar testes de integração
 - [ ] Sistema de cache
@@ -168,18 +176,21 @@ src/
 ## 🎯 Princípios da Arquitetura
 
 ### 📐 Domain-Driven Design (DDD)
+
 - **Domain**: Contém a lógica de negócio pura
 - **Application**: Orquestra casos de uso
 - **Infrastructure**: Implementações técnicas
 - **Presentation**: Interface com o mundo externo
 
 ### 🏗️ Clean Architecture
+
 - **Independência de frameworks**: Domínio não depende de frameworks
 - **Testabilidade**: Cada camada pode ser testada isoladamente
 - **Independência da UI**: Lógica não depende da interface
 - **Independência do banco**: Domínio não conhece persistência
 
 ### 💉 Injeção de Dependências
+
 - **Inversão de controle**: Dependências injetadas via container
 - **Interfaces**: Acoplamento baixo através de contratos
 - **Singleton/Factory patterns**: Gerenciamento de ciclo de vida

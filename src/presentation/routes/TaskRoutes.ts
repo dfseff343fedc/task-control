@@ -8,6 +8,20 @@ import { TaskController } from '../controllers/index.js';
  */
 export function createTaskRoutes(taskController: TaskController): RouteDefinition[] {
   return [
+    // Health check básico
+    {
+      method: 'GET',
+      path: '/health',
+      handler: asyncErrorHandler(async (_req, res) => {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ 
+          status: 'ok', 
+          service: 'task-control-api',
+          timestamp: new Date().toISOString() 
+        }));
+      })
+    },
+
     // Criar nova tarefa
     {
       method: 'POST',

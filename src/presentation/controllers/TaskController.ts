@@ -1,10 +1,13 @@
 import { ServerResponse } from 'node:http';
 import { ExtendedRequest } from '../../infrastructure/http/index.js';
-import { CreateTaskUseCase } from '../../application/index.js';
 import { CreateTaskRequest } from '../../application/index.js';
+import { QueryParamsUtils, UseCaseFactory } from '../../shared/index.js';
 
 export class TaskController {
-  constructor(private readonly createTaskUseCase: CreateTaskUseCase) {}
+  // Não precisa de dependências injetadas!
+  // Os use cases são criados sob demanda via factory
+
+
 
   /**
    * Cria uma nova tarefa
@@ -30,8 +33,8 @@ export class TaskController {
         description: req.body.description
       };
 
-      // Executar use case
-      const result = await this.createTaskUseCase.execute(requestData);
+      // Executar use case (criado sob demanda)
+      const result = await UseCaseFactory.getCreateTaskUseCase().execute(requestData);
 
       // Retornar sucesso
       res.writeHead(201);
@@ -66,18 +69,21 @@ export class TaskController {
    * Lista todas as tarefas
    * GET /tasks
    */
-  public async listTasks(_req: ExtendedRequest, res: ServerResponse): Promise<void> {
+  public async listTasks(req: ExtendedRequest, res: ServerResponse): Promise<void> {
     try {
-      // TODO: Implementar ListTasksUseCase
-      res.writeHead(200);
-      res.end(JSON.stringify({
-        message: 'List tasks endpoint - To be implemented',
-        timestamp: new Date().toISOString()
-      }));
+      // Extrai query parameters usando o utilitário
+      const params = QueryParamsUtils.extractListTasksParams(req);
+      
+      
+      
+      const result = await UseCaseFactory.getListTasksUseCase().execute(params);
+      
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(result));
     } catch (error) {
       console.error('Error listing tasks:', error);
       
-      res.writeHead(500);
+      res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({
         error: 'Internal Server Error',
         message: 'Failed to list tasks',
@@ -129,7 +135,7 @@ export class TaskController {
    * Atualiza uma tarefa
    * PUT /tasks/:id
    */
-  public async updateTask(_req: ExtendedRequest, res: ServerResponse, params?: any): Promise<void> {
+  public async updateTask(req: ExtendedRequest, res: ServerResponse, params?: any): Promise<void> {
     try {
       const taskId = params?.id;
       
@@ -144,12 +150,10 @@ export class TaskController {
         return;
       }
 
-      // TODO: Implementar UpdateTaskUseCase
+      const result = await UseCaseFactory.getUpdateTaskUseCase().execute(taskId, req.body);
       res.writeHead(200);
-      res.end(JSON.stringify({
-        message: `Update task ${taskId} endpoint - To be implemented`,
-        timestamp: new Date().toISOString()
-      }));
+      res.end(JSON.stringify(result));
+      
     } catch (error) {
       console.error('Error updating task:', error);
       
@@ -182,7 +186,7 @@ export class TaskController {
         return;
       }
 
-      // TODO: Implementar DeleteTaskUseCase
+      await UseCaseFactory.getDeleteTaskUseCase().execute(taskId);
       res.writeHead(200);
       res.end(JSON.stringify({
         message: `Delete task ${taskId} endpoint - To be implemented`,
@@ -210,7 +214,7 @@ export class TaskController {
       const taskId = params?.id;
       
       if (!taskId) {
-        res.writeHead(400);
+        res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
           error: 'Bad Request',
           message: 'Task ID is required',
@@ -220,22 +224,30 @@ export class TaskController {
         return;
       }
 
-      // TODO: Implementar ToggleTaskCompleteUseCase
-      res.writeHead(200);
-      res.end(JSON.stringify({
-        message: `Toggle complete task ${taskId} endpoint - To be implemented`,
-        timestamp: new Date().toISOString()
-      }));
+      const result = await UseCaseFactory.getToggleCompletedUseCase().execute({ id: taskId });
+      
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(result));
     } catch (error) {
       console.error('Error toggling task completion:', error);
       
-      res.writeHead(500);
-      res.end(JSON.stringify({
-        error: 'Internal Server Error',
-        message: 'Failed to toggle task completion',
-        statusCode: 500,
-        timestamp: new Date().toISOString()
-      }));
+      if (error instanceof Error && error.message?.includes('not found')) {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          error: 'Not Found',
+          message: `Task with ID ${params?.id} not found`,
+          statusCode: 404,
+          timestamp: new Date().toISOString()
+        }));
+      } else {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          error: 'Internal Server Error',
+          message: 'Failed to toggle task completion',
+          statusCode: 500,
+          timestamp: new Date().toISOString()
+        }));
+      }
     }
   }
 }
