@@ -11,7 +11,7 @@
 
 ## 🎯 **Sobre o Projeto**
 
-O **Task Control** é uma aplicação backend que demonstra a implementação de **Clean Architecture** e **Domain-Driven Design (DDD)** usando apenas **Node.js nativo** e **TypeScript**. 
+O **Task Control** é uma aplicação backend que demonstra a implementação de **Clean Architecture** e **Domain-Driven Design (DDD)** usando apenas **Node.js nativo** e **TypeScript**.
 
 ### ✨ **Características Principais**
 
@@ -33,7 +33,7 @@ O projeto segue os princípios da **Clean Architecture** de Robert C. Martin, or
 ```
 src/
 ├── 🏢 domain/           # Camada de Domínio
-├── 💼 application/      # Camada de Aplicação  
+├── 💼 application/      # Camada de Aplicação
 ├── 🔧 infrastructure/   # Camada de Infraestrutura
 ├── 🌐 presentation/     # Camada de Apresentação
 └── 📦 shared/          # Recursos Compartilhados
@@ -42,6 +42,7 @@ src/
 ### 📋 **Responsabilidades das Camadas**
 
 #### 🏢 **Domain (Domínio)**
+
 - **Responsabilidade**: Contém as regras de negócio centrais
 - **Componentes**:
   - **Entities**: Entidade `Task` com validações e métodos de negócio
@@ -50,6 +51,7 @@ src/
   - **Domain Services**: Serviços específicos do domínio
 
 #### 💼 **Application (Aplicação)**
+
 - **Responsabilidade**: Orquestração dos casos de uso da aplicação
 - **Componentes**:
   - **Use Cases**: Casos de uso implementados (Create, List, Update, Delete, Toggle)
@@ -57,6 +59,7 @@ src/
   - **Interfaces**: Contratos de serviços externos
 
 #### 🔧 **Infrastructure (Infraestrutura)**
+
 - **Responsabilidade**: Implementação de detalhes técnicos
 - **Componentes**:
   - **Database**: Sistema de banco de dados em JSON
@@ -65,6 +68,7 @@ src/
   - **External Services**: Integrações externas
 
 #### 🌐 **Presentation (Apresentação)**
+
 - **Responsabilidade**: Interface de comunicação (API REST)
 - **Componentes**:
   - **Controllers**: Controladores HTTP (`TaskController`)
@@ -72,6 +76,7 @@ src/
   - **Middlewares**: Middlewares de requisição
 
 #### 📦 **Shared (Compartilhado)**
+
 - **Responsabilidade**: Recursos utilizados por múltiplas camadas
 - **Componentes**:
   - **Types**: Tipos TypeScript compartilhados
@@ -83,6 +88,7 @@ src/
 ## 🚀 **Funcionalidades**
 
 ### 📋 **CRUD Completo de Tarefas**
+
 - ✅ **Criar** tarefa com validações
 - 📖 **Listar** tarefas com filtros e paginação
 - ✏️ **Atualizar** tarefa parcial ou totalmente
@@ -90,6 +96,7 @@ src/
 - 🔄 **Alternar** status de completada
 
 ### 🔍 **Recursos Avançados**
+
 - 🔍 Busca por termo (título e descrição)
 - 📄 Paginação configurável
 - 🗂️ Filtros por status e data de criação
@@ -102,20 +109,23 @@ src/
 ## 🛠️ **Tecnologias Utilizadas**
 
 ### **Core**
+
 - **TypeScript 5.9.2** - Linguagem principal
 - **Node.js >=18** - Runtime JavaScript
 
 ### **Configurações**
+
 - **ESModules** - Sistema de módulos moderno
 - **Strict TypeScript** - Configurações rigorosas
 - **Path Mapping** - Imports limpos com aliases
 - **Source Maps** - Debug facilitado
 
 ### **Dependências de Desenvolvimento**
+
 ```json
 {
   "@types/node": "^24.3.1",
-  "rimraf": "^6.0.1", 
+  "rimraf": "^6.0.1",
   "ts-node": "^10.9.2",
   "typescript": "^5.9.2"
 }
@@ -126,11 +136,13 @@ src/
 ## 📡 **Endpoints da API**
 
 ### **Health Check**
+
 ```http
 GET /health
 ```
 
 ### **Tarefas**
+
 ```http
 POST   /tasks              # Criar tarefa
 GET    /tasks              # Listar tarefas (com filtros)
@@ -142,6 +154,7 @@ PATCH  /tasks/:id/complete # Alternar status de completada
 ### **Exemplo de Uso**
 
 **Criar uma tarefa:**
+
 ```bash
 curl -X POST http://localhost:3333/tasks \
   -H "Content-Type: application/json" \
@@ -152,6 +165,7 @@ curl -X POST http://localhost:3333/tasks \
 ```
 
 **Listar tarefas com filtros:**
+
 ```bash
 curl "http://localhost:3333/tasks?completed=false&search=estudar&page=1&limit=10"
 ```
@@ -161,26 +175,31 @@ curl "http://localhost:3333/tasks?completed=false&search=estudar&page=1&limit=10
 ## 🚀 **Como Executar o Projeto**
 
 ### **Pré-requisitos**
+
 - Node.js >= 18
 - npm ou yarn
 
 ### **1. Clone o repositório**
+
 ```bash
 git clone https://github.com/maykonsousa/task-control.git
 cd task-control
 ```
 
 ### **2. Instale as dependências**
+
 ```bash
 npm install
 ```
 
 ### **3. Execute em modo de desenvolvimento**
+
 ```bash
 npm run dev
 ```
 
 ### **4. Execute em produção**
+
 ```bash
 # Compilar o projeto
 npm run build
@@ -190,6 +209,7 @@ npm start
 ```
 
 ### **5. Scripts disponíveis**
+
 ```bash
 npm run dev        # Desenvolvimento com hot reload
 npm run build      # Compilar TypeScript para JavaScript
@@ -236,11 +256,13 @@ task-control/
 ## 🧪 **Testando a API**
 
 ### **Health Check**
+
 ```bash
 curl http://localhost:3333/health
 ```
 
 ### **Criar primeira tarefa**
+
 ```bash
 curl -X POST http://localhost:3333/tasks \
   -H "Content-Type: application/json" \
@@ -255,13 +277,15 @@ curl -X POST http://localhost:3333/tasks \
 ## 🎯 **Princípios Aplicados**
 
 ### **Clean Architecture**
+
 - **Independência de frameworks** - Sem dependência de libs externas
-- **Testabilidade** - Código desacoplado e injetável  
+- **Testabilidade** - Código desacoplado e injetável
 - **Independência de UI** - Lógica separada da apresentação
 - **Independência de banco** - Repository pattern
 - **Regra de dependência** - Dependências apontam para dentro
 
 ### **Domain-Driven Design**
+
 - **Ubiquitous Language** - Linguagem comum do domínio
 - **Entities** - Objetos com identidade
 - **Value Objects** - Objetos sem identidade
@@ -269,8 +293,9 @@ curl -X POST http://localhost:3333/tasks \
 - **Repository Pattern** - Abstração de persistência
 
 ### **SOLID Principles**
+
 - **S** - Single Responsibility Principle
-- **O** - Open/Closed Principle  
+- **O** - Open/Closed Principle
 - **L** - Liskov Substitution Principle
 - **I** - Interface Segregation Principle
 - **D** - Dependency Inversion Principle
@@ -280,12 +305,14 @@ curl -X POST http://localhost:3333/tasks \
 ## 💡 **Por que essa abordagem?**
 
 ### **🚫 Zero Dependencies Approach**
+
 - **Performance** - Menos overhead de bibliotecas
 - **Segurança** - Menor superfície de ataque
 - **Controle** - Total controle sobre o código
 - **Aprendizado** - Entendimento profundo do Node.js
 
 ### **🏗️ Clean Architecture Benefits**
+
 - **Manutenibilidade** - Código organizado e limpo
 - **Testabilidade** - Fácil de testar cada camada
 - **Flexibilidade** - Fácil de trocar implementações
@@ -312,6 +339,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 👨‍💻 **Autor**
 
 **Maykon Sousa**
+
 - GitHub: [@maykonsousa](https://github.com/maykonsousa)
 - LinkedIn: [Maykon Sousa](https://linkedin.com/in/maykonsousa)
 
